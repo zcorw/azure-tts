@@ -31,7 +31,9 @@ function speakText(speechSynthesizer, text, path) {
 async function tts(list, lang, filename, onProgress) {
     speechConfig.speechSynthesisVoiceName = voiceList[lang];
     speechConfig.speechSynthesisOutputFormat = sdk.SpeechSynthesisOutputFormat.Riff48Khz16BitMonoPcm;
-    speechConfig.setProxy("127.0.0.1", 7890);
+    if (process.env.PROXY_IP && process.env.PROXY_PORT) {
+      speechConfig.setProxy(process.env.PROXY_IP, process.env.PROXY_PORT);
+    }
     const audioConfig = sdk.AudioConfig.fromAudioFileOutput(filename);
     const speechSynthesizer = new sdk.SpeechSynthesizer(speechConfig, audioConfig);
     

@@ -10,3 +10,6 @@ node index
 `SPEECH_KEY` Azure SpeechServices 的 key<br/>
 `SPEECH_REGION` Azure SpeechServices 的服务地区<br/>
 `AUDIOFOLDER` 保存音频地址(绝对路径)<br/>
+`PORT` 服务监听端口<br/>
+`PROXY_IP` 如果访问不到 Azure， 设置代理 ip<br/>
+`PROXY_PORT` 如果访问不到 Azure， 设置代理端口
