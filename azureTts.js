@@ -40,7 +40,6 @@ async function tts(list, lang, filename, onProgress) {
     for (let i = 0; i < list.length; i++) {
       try {
         await speakText(speechSynthesizer, list[i], filename);
-        console.log("执行" + i);
         onProgress(i);
       } catch(e) {
         console.error(e);

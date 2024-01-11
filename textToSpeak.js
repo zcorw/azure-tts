@@ -1,25 +1,18 @@
 const tts = require("./azureTts");
 const wavToMp3 = require("./wavToMp3");
 const { add, oneStep } = require("./task");
+const createTxtFile = require('./lib/createTxtFile');
 const path = require("path");
-const fs = require("fs");
+const audioFolder = require("./utils/audioFolder");
 
-const folderPath = process.env.AUDIOFOLDER;
-fs.stat(folderPath, (err, stats) => {
-  if (err) {
-    fs.mkdirSync(folderPath);
-  } else {
-    if (!stats.isDirectory()) {
-      fs.mkdirSync(folderPath);
-    }
-  }
-});
+const folderPath = audioFolder();
 
-async function textToMp3(title, text, lang) {
+function textToMp3(title, text, lang) {
+  createTxtFile(path.join(folderPath, `${title}.txt`), text);
   const result = text.replace(/[。！？；]/g, (t) => `${t}\u200b`).split(/\u200b/);
   const finalResult = result.map(t => t.trim()).filter((item) => item !== '');
-  const filePath = path.join(__dirname, "audios", `${title}.wav`);
-  const id = add(finalResult.length);
+  const filePath = path.join(folderPath, `${title}.wav`);
+  const id = add(finalResult.length, title);
   tts(finalResult, lang, filePath, () => {
     oneStep(id);
   })
