@@ -1,7 +1,7 @@
 const tts = require("./azureTts");
 const wavToMp3 = require("./wavToMp3");
 const { add, oneStep } = require("./task");
-const createTxtFile = require('./lib/createTxtFile');
+const createTxtFile = require('./createTxtFile');
 const path = require("path");
 const audioFolder = require("./utils/audioFolder");
 
