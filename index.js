@@ -37,6 +37,12 @@ const publicFileMiddleware = async (ctx, next) => {
   await next();
 };
 
+app.use(async (ctx, next) => {
+  ctx.set('Access-Control-Allow-Origin', '*');
+  ctx.set('Access-Control-Allow-Methods', 'OPTIONS, GET, POST, PUT, DELETE');
+  ctx.set('Access-Control-Allow-Headers', '*');
+  await next();
+});
 app.use(publicFileMiddleware);
 // 使用 bodyParser 中间件来解析 POST 请求中的参数
 app.use(bodyParser());
