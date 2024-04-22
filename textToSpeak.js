@@ -31,7 +31,9 @@ function textToMp3(title, text, lang) {
     moveFile(mp3Path, path.join(audioFolder, `${title}.mp3`));
     moveFile(textPath, path.join(audioFolder, `${title}.txt`));
     // 删除wav文件
-    fs.unlinkSync(filePath);
+    fs.unlink(filePath, (err) => {
+      if (err)  console.error(err);
+    });
   });
   return id;
 }
