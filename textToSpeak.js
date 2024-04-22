@@ -5,6 +5,7 @@ const createTxtFile = require('./createTxtFile');
 const path = require("path");
 const createFolder = require("./utils/audioFolder");
 const moveFile = require("./utils/moveFile");
+const fs = require("fs");
 
 const folderPath = createFolder(path.join(__dirname, "audios"));
 const date = new Date()
