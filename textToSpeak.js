@@ -6,7 +6,7 @@ const path = require("path");
 const createFolder = require("./utils/audioFolder");
 const moveFile = require("./utils/moveFile");
 
-const folderPath = createFolder();
+const folderPath = createFolder(path.join(__dirname, "audios"));
 const date = new Date()
 const year = date.getFullYear()
 const month = String(date.getMonth() + 1).padStart(2, '0')

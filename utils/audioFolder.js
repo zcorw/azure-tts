@@ -1,9 +1,7 @@
 const path = require("path");
 const fs = require("fs");
 
-const _path =  path.join(__dirname, "audios");
-
-module.exports = function audioFolder(folderPath = _path) {
+module.exports = function audioFolder(folderPath) {
   fs.stat(folderPath, (err, stats) => {
     if (err) {
       fs.mkdirSync(folderPath);
