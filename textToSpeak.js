@@ -3,12 +3,19 @@ const wavToMp3 = require("./wavToMp3");
 const { add, oneStep } = require("./task");
 const createTxtFile = require('./createTxtFile');
 const path = require("path");
-const audioFolder = require("./utils/audioFolder");
+const createFolder = require("./utils/audioFolder");
+const moveFile = require("./utils/moveFile");
 
-const folderPath = audioFolder();
+const folderPath = createFolder();
+const date = new Date()
+const year = date.getFullYear()
+const month = String(date.getMonth() + 1).padStart(2, '0')
+const day = String(date.getDate()).padStart(2, '0')
+const audioFolder = createFolder(path.join(process.env.AUDIOFOLDER, `${year}${month}${day}`));
 
 function textToMp3(title, text, lang) {
-  createTxtFile(path.join(folderPath, `${title}.txt`), text);
+  const textPath = path.join(folderPath, `${title}.txt`)
+  createTxtFile(textPath, text);
   const result = text.replace(/[。！？；]/g, (t) => `${t}\u200b`).split(/\u200b/);
   const finalResult = result.map(t => t.trim()).filter((item) => item !== '');
   const filePath = path.join(folderPath, `${title}.wav`);
@@ -17,9 +24,13 @@ function textToMp3(title, text, lang) {
     oneStep(id);
   })
   .then(() => wavToMp3(filePath))
-  .then(() => {
+  .then((mp3Path) => {
     oneStep(id);
     console.log("成功");
+    moveFile(mp3Path, path.join(audioFolder, `${title}.mp3`));
+    moveFile(textPath, path.join(audioFolder, `${title}.txt`));
+    // 删除wav文件
+    fs.unlinkSync(filePath);
   });
   return id;
 }
